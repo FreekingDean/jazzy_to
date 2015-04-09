@@ -8,15 +8,11 @@ require 'jazzy_to/models/jazzy'
 
 module JazzyTo
   class << self
-    attr_writer :configuration
-  end
-
-  def self.configuration
-    @configuration || Configuration.new
+    attr_accessor :configuration
   end
 
   def self.configure
-    self.configuration ||= Configure.new
+    self.configuration ||= Configuration.new
 
     yield(configuration)
   end
