@@ -13,4 +13,4 @@ migrate
 `rake db:migrate`
 
 use
-`<%= jazzy_to(:optional_name)`
+`<%= jazzy_to(:optional_name) %>`
