@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/jazzy_to.svg)](http://badge.fury.io/rb/jazzy_to)
 # jazzy-to
 ![Jazzy](http://mobilityscootersdir.com/img-big/80.jpg)
 ##Jazzing content into your rails app.
