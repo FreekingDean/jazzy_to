@@ -1,7 +1,6 @@
 require "active_record"
 module JazzyTo
   class Jazzy < ActiveRecord::Base
-    validates_presence_of :content
     def approve!
       self.content = self.pending_content
       self.pending_content = nil

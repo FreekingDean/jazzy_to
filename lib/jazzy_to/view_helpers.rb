@@ -3,18 +3,25 @@ module JazzyTo
     def jazzy_to(name=nil)
       namespace = request.params[:controller].split('/')
       controller = namespace.pop
-      namespace = namespace.count == 0 ? nil : namespace.pop
-      content = JazzyTo::ContentFinder.fetch({
+      namespace = namespace.count == 0 ? "default" : namespace.pop
+      @content = JazzyTo::ContentFinder.fetch({
         :namespace => namespace,
         :controller => controller,
         :action => params[:action],
         :name => name
       })
 
-      if JazzyTo.configuration.editor_check.call
-        "#{content.pending_content}<button type='button'>Edit</button>".html_safe
+      if eval(JazzyTo.configuration.editor_check)
+        html = File.open(
+          File.join(
+            File.dirname(File.expand_path(__FILE__)), "templates/jazzy.html.erb"
+          )
+        ).read
+        erb = ERB.new(html)
+
+        return erb.result(binding).html_safe
       else
-        content.content.html_safe
+        return @content.content.html_safe
       end
     end
   end

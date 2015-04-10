@@ -7,6 +7,8 @@ require 'jazzy_to/railtie.rb'
 require 'jazzy_to/models/jazzy'
 
 module JazzyTo
+  class Engine < Rails::Engine; end
+
   class << self
     attr_accessor :configuration
   end

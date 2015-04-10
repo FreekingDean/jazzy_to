@@ -1,0 +1,55 @@
+<div style="display: block;" id="jazzy_content_<%= @content.id %>" class="jazzy editor content">
+  <%= @content.content %>
+</div>
+<div style="display: none;" id="pending_jazzy_content_<%= @content.id %>">
+  <textarea id="jazzy_pending_content_<%= @content.id %>" class="jazzy editor content pending"><%= @content.pending_content %></textarea>
+  <button type="button" onclick="jazzyApprove('<%=@content.id%>');" class="jazzy editor approve button">
+    Approve
+  </button>
+  <button type="button" onclick="jazzySave('<%=@content.id%>');" class="jazzy editor save button">
+    Save
+  </button>
+</div>
+<button type="button" onclick="jazzySwitcher('<%=@content.id%>')" class="jazzy editor edit button">
+  Edit
+</button>
+<script>
+function jazzySwitcher(content_id) {
+  content_id = content_id.trim();
+  var pending = document.getElementById("pending_jazzy_content_"+content_id);
+  var content = document.getElementById("jazzy_content_"+content_id);
+  if(content.style.display == 'block') {
+    pending.style.display = 'block';
+    content.style.display = 'none';
+  } else {
+    content.style.display = 'block';
+    pending.style.display = 'none';
+  }
+}
+
+function jazzyApprove(content_id) {
+  content_id = content_id.trim();
+  $.get("/jazzies/"+content_id+"/approve", function(data) {
+    if(data.success) {
+      jazzySwitcher(content_id);
+      var content = document.getElementById("jazzy_content_"+content_id);
+      content.innerHTML = data.content;
+    } else {
+      alert("Couldn't save jazzy! Try a refresh!");
+    }
+  });
+}
+
+function jazzySave(content_id) {
+  content_id = content_id.trim();
+  $.ajax({
+    url : "/jazzies/"+content_id,
+    data : { 'jazzy' : { pending_content : $("#jazzy_pending_content_"+content_id).val() } },
+    type : 'PATCH',
+    success: function(data) {
+      if(!data.success) {
+        alert("Couldn't save jazzy! Try a refresh!");
+      }}
+  });
+}
+</script>
