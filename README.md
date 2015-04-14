@@ -2,7 +2,7 @@
 # jazzy-to
 ![Jazzy](http://mobilityscootersdir.com/img-big/80.jpg)
 ##Jazzing content into your rails app.
-
+Jazzy To is a content manager to add & edit live copy(content) on your rails app. You can use the built in helpers to get the content and edit it in place. This allows you to not need to re deploy each time wording needs to be changed.
 
 Add to your gem file
 `gem 'jazzy_to'`
